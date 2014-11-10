@@ -26,12 +26,16 @@
 
     # Install mysql
     - name: be sure mysql is installed
-      yum: name={{ item }} state=installed
+      yum: name={{ item }} state=installed enablerepo=remi
       with_items:
         - mysql
         - mysql-devel
-        - mysql-utilities
         - mysql-server
+        - mysql-utilities
+
+    - name: be sure mysql is installed
+      yum: name={{ item }} state=installed enablerepo=remi
+      with_items:
         - MySQL-python
 
     # php
