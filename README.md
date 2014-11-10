@@ -11,7 +11,7 @@ vagrant up
 2 
 
 ```sh
-ansible learn_ansible -m ping -i inventory_file -vvvv
+ansible lamp -m ping -i inventory_file -vvvv
 ```
 が成功することを確認
 
@@ -19,7 +19,7 @@ ansible learn_ansible -m ping -i inventory_file -vvvv
 3 
 
 ```sh
-ansible learn_ansible -m shell -a 'pwd; ls -la;' -i inventory_file -vvvv
+ansible lamp -m shell -a 'pwd; ls -la;' -i inventory_file -vvvv
 ```
 を実行するとVM内でコマンドが実行できるていることが確認できる
 
@@ -39,4 +39,28 @@ http://lamp.test/
 hello test lamp
 
 というページが表示されることを確認する
+
+
+4 
+
+リポジトリにあるVagrantfile.newをVagrantファイルにしてから
+```sh
+vagrant destroy
+default: Are you sure you want to destroy the 'default' VM? [y/N] y
+```
+で一旦VMを削除して、
+
+```sh
+vagrant up
+~
+sudo password:[自分のPCのrootパスワード]
+```
+ではじめのVM作成時にansibleを実行することができる
+
+ここで実行しているコマンドは
+
+```sh
+vagrant provision
+```
+コマンドで再実行することもできる
 
