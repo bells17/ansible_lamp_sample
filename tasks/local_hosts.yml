@@ -1,0 +1,10 @@
+---
+- name: set local /etc/hosts file
+  local_action: >
+    lineinfile 
+      dest=/etc/hosts 
+      regexp="^{{ ansible_ssh_host }} {{ host }}" 
+      line="{{ ansible_ssh_host }} {{ host }}"
+
+- name: display message
+  debug: msg="Provisioning Completed. Now you can access VM at http://{{ host }}/"

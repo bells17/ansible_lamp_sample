@@ -1,0 +1,3 @@
+apache_install_path: '/etc/httpd'
+document_root: '/vagrant/'
+host: 'lamp.test'

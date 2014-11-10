@@ -1,0 +1,75 @@
+- hosts: lamp
+  sudo: yes
+  vars_files:
+    - vars/lamp.yml
+  tasks:
+
+    # yum repo
+    - name: Download EPEL repo.
+      get_url: url=http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm dest=/tmp/
+
+    - name: Install EPEL repo.
+      command: rpm -Uvh --force /tmp/epel-release-6-8.noarch.rpm creates=/etc/yum.repos.d/epel.repo
+
+    - name: Download Remi repo.
+      get_url: url=http://rpms.famillecollet.com/enterprise/remi-release-6.rpm dest=/tmp/
+
+    - name: Install Remi repo.
+      command: rpm -Uvh --force /tmp/remi-release-6.rpm creates=/etc/yum.repos.d/remi.repo
+
+    # Install apache 
+    - name: be sure httpd is installed
+      yum: name={{ item }} state=installed
+      with_items:
+        - httpd
+        - httpd-devel
+
+    # Install mysql
+    - name: be sure mysql is installed
+      yum: name={{ item }} state=installed
+      with_items:
+        - mysql
+        - mysql-devel
+        - mysql-utilities
+        - mysql-server
+        - MySQL-python
+
+    # php
+    - name: be sure php is installed
+      yum: name={{ item }} state=installed enablerepo=remi,remi-php55
+      with_items:
+        - php
+        - php-devel
+        - php-cli
+        - php-common
+        - php-pear
+        - php-pecl-jsonc
+        - php-pecl-zip
+        - php-process
+        - php-xml
+        - php-mysql
+        - php-mbstring
+        - php-pgsql
+
+    # vhost
+    - name: Ensure vhost is enabled
+      template: src=templates/vhost.conf.j2 dest={{ apache_install_path }}/conf.d/vhost.conf
+
+    - name: restart
+      shell: ls
+      notify:
+       - restart apache
+       - restart mysql
+
+    # /etc/hosts
+    - include: tasks/local_hosts.yml
+
+  handlers:
+    - name: restart mysql
+      service: name=mysqld state=restarted
+
+    - name: restart apache
+      service: name=httpd state=restarted
+
+    - name: restart sshd
+      service: name=sshd state=restarted
