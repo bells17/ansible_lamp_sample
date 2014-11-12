@@ -33,7 +33,7 @@
         - mysql-server
         - mysql-utilities
 
-    - name: be sure mysql is installed
+    - name: be sure MySQL-python is installed
       yum: name={{ item }} state=installed enablerepo=remi
       with_items:
         - MySQL-python
