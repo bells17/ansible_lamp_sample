@@ -29,7 +29,7 @@ ansible lamp -m shell -a 'pwd; ls -la;' -i inventory_file -vvvv
 4 
 
 ```sh
-ansible-playbook -i inventory_file lamp.yml -vvv --ask-sudo-pass
+ansible-playbook -i inventory_file lamp.yml -vvvv --ask-sudo-pass
 sudo password:[自分のPCのrootパスワード]
 ```
 を実行して

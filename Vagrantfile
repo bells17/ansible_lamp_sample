@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.provision "ansible" do |ansible|
   #   # ansible.sudo = true
   #   ansible.ask_sudo_pass = true
-  #   ansible.verbose = 'vv'
+  #   ansible.verbose = 'vvvv'
   #   ansible.playbook = "lamp.yml"
   #   ansible.inventory_path = "inventory_file"
   #   ansible.limit = 'lamp'
